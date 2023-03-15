@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NavbarService } from '../navbar.service';
+import { UserLoginService } from '../login/login.component.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,13 +8,33 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
+  constructor(public navbarService: NavbarService, public userLoginService: UserLoginService) { }
 
-  collapse() {
-    this.isExpanded = false;
+  navigateLogin()
+  {
+    window.location.href = 'login';
   }
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
+  navigateAbout()
+  {
+    window.location.href = 'about';
+  }
+
+  check()
+  {
+    if(this.userLoginService.isLogged() === true)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  logOut = () => {
+    localStorage.removeItem('User');
+    localStorage.setItem('isLogged', "false");
+    window.location.href = '/';
   }
 }

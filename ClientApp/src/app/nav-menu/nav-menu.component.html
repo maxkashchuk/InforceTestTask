@@ -1,44 +1,17 @@
-<header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">InforceTestTask</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
+<mat-toolbar *ngIf="navbarService.navBarVisible">
+<span>
+  <a class="title" href="/">
+    URL Shortener
+  </a>
+</span>
+ <span class="example-spacer"></span>
+ <button class="about-button" (click)="navigateAbout()" color="accent" mat-raised-button>
+  <mat-icon style="font-size: 18px;">info_outline</mat-icon>
+ </button>
+ <button *ngIf="!check()" (click)="navigateLogin()" mat-stroked-button>
+  <mat-icon style="font-size: 20px; font-weight: bold;">login</mat-icon>
+ </button>
+ <button *ngIf="check()" (click)="logOut()" mat-stroked-button>
+  <mat-icon style="font-size: 20px; font-weight: bold;">logout</mat-icon>
+ </button>
+</mat-toolbar>
