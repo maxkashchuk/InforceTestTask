@@ -1,0 +1,17 @@
+<mat-toolbar *ngIf="navbarService.navBarVisible">
+<span>
+  <a class="title" href="/">
+    URL Shortener
+  </a>
+</span>
+ <span class="example-spacer"></span>
+ <button class="about-button" (click)="navigateAbout()" color="accent" mat-raised-button>
+  <mat-icon style="font-size: 18px;">info_outline</mat-icon>
+ </button>
+ <button *ngIf="!check()" (click)="navigateLogin()" mat-stroked-button>
+  <mat-icon style="font-size: 20px; font-weight: bold;">login</mat-icon>
+ </button>
+ <button *ngIf="check()" (click)="logOut()" mat-stroked-button>
+  <mat-icon style="font-size: 20px; font-weight: bold;">logout</mat-icon>
+ </button>
+</mat-toolbar>

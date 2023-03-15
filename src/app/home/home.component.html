@@ -1,0 +1,65 @@
+<div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="longUrl">
+      <th mat-header-cell *matHeaderCellDef>Long URL</th>
+      <td mat-cell *matCellDef="let element">
+        <a *ngIf="userLoginService.userGetRole() === 'Admin'" style="text-decoration: underline;" (click)="navigateInfo()">
+          {{(element.longUrl > 50) ? element.longUrl.splice(50, element.longUrl.length) : element.longUrl}}
+        </a>
+        <p *ngIf="userLoginService.userGetRole() !== 'Admin'">
+          {{(element.longUrl > 50) ? element.longUrl.splice(50, element.longUrl.length) : element.longUrl}}
+        </p>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="shortUrl">
+      <th mat-header-cell *matHeaderCellDef>Short URL</th>
+      <td mat-cell *matCellDef="let element">
+        <a *ngIf="userLoginService.isLogged()" href={{element.longUrl}}>
+          {{element.shortUrl}}
+        </a>
+        <p *ngIf="!userLoginService.isLogged()">
+          {{element.shortUrl}}
+        </p>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+        mat-row
+        (click)="clickedRows.add(row); certainRow = row"
+        [class.demo-row-is-clicked]="clickedRows.has(row)"
+        *matRowDef="let row; columns: displayedColumns;"
+    ></tr>
+  </table>
+  <div *ngIf="userLoginService.userGetRole() === 'Admin'" class="url-configure-section">
+    <div class="section-element">
+      <button class="add-button" (click)="AddURL()" mat-raised-button color="primary">
+        <mat-icon >add_task</mat-icon>
+      </button>
+    </div>
+     <div class="section-element">
+      <mat-form-field class="example-full-width add-input">
+        <mat-label>URL</mat-label>
+        <input type="email" [(ngModel)]="URL" matInput [formControl]="urlMatcher" [errorStateMatcher]="matcher"
+               placeholder="Example: https://www.wikipedia.org/">
+        <mat-error *ngIf="urlMatcher.hasError('login') && !urlMatcher.hasError('required')">
+          Please enter a valid URL address
+        </mat-error>
+        <mat-error *ngIf="urlMatcher.hasError('required')">
+          URL is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+     </div>
+     <div class="section-element">
+      <button (click)="DeleteURL()" class="add-button" mat-raised-button color="warn">
+        <mat-icon >delete_forever</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
